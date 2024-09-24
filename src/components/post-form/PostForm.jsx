@@ -9,26 +9,30 @@ function PostForm({post}) {
     const {handleSubmit, register, watch, setValue, control, getValues} = useForm({
         defaultValues: {
             title: post?.title || "",
-            slug: post?.slug || "",
+            slug: post?.$id || "",
             content: post?.content || "",
             status: post?.status || "active",
         }
     })
 
     const navigate = useNavigate()
-    const userData = useSelector(status => status.auth.userData)
+    const userData = useSelector((state) => state.auth.userData)
 
     const submit = async (data) => {
         if (post) {
-            const file = data.image[0] ? appwriteService.uploadFile(data.image[0]) : null
-
+            const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null
+            
             if (file) {
                 appwriteService.deleteFile(post.featuredImage)
             }
-            const dbPost = await appwriteService.deletePost(post.$id, {
-                ...data,
-                featuredImage: file ? file?.id : undefined
+            const dbPost = await appwriteService.updatePost(post.$id, {
+                ...data ,
+                featuredImage: file ? file.$id : undefined
+                
             })
+            console.log(dbPost);
+            
+            
             
             if (dbPost) {
                 navigate(`/post/${dbPost.$id}`)
@@ -58,7 +62,7 @@ function PostForm({post}) {
             return value
                 .toLowerCase()
                 .trim()
-                .replace(/^[a-zA-z\d\s]+/g, "-")
+                .replace(/[^a-zA-z\d\s]+/g, "-")
                 .replace(/\s/g, "-")
             
             return ""

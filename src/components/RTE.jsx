@@ -11,7 +11,8 @@ export default function RTE({name, control, label, defaultValue=""}) {
         control={control}
         render={({field: {onChange}}) => (
             <Editor
-            value={defaultValue}
+            initialValue={defaultValue}
+            apiKey='avril8v0342xe01olstcqcf0x18b0evpgvyxe46mpxsv0b5c'
             init={{
                 initialValue: defaultValue,
                 height: 500,
@@ -38,7 +39,7 @@ export default function RTE({name, control, label, defaultValue=""}) {
                     "wordcount",
                     "anchor",
                 ],
-                toolbar:  "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |removeformat | help",
+                toolbar:  "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |removeformat | help",
                 content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
             }}
             onEditorChange={onChange}
