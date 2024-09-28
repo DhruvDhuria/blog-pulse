@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import './App.css'
 import authService from './appwrite/auth'
+import appwriteService from './appwrite/config'
 import {login, logout} from "./store/authSlice"
 import { Footer, Header } from './components/index'
 import { Outlet } from 'react-router-dom'
-
+import { setPost } from './store/postSlice'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -21,6 +22,13 @@ function App() {
       }
     })
     .finally(() => setLoading(false))
+
+    appwriteService.getPosts()
+    .then((posts) => {
+      if (posts) {
+        dispatch(setPost(posts.documents))
+      }
+    })
   }, [])
   
 
