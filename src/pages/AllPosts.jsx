@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react'
-import appwriteService from "../appwrite/config"
 import { PostCard, Container } from '../components'
 import { useSelector } from 'react-redux'
 
